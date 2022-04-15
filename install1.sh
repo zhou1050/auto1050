@@ -186,10 +186,10 @@ conn l2tp-psk-nonat
     leftprotoport=17/1701
     right=%any
     rightprotoport=17/%any
-    dpddelay=40
-    dpdtimeout=130
+    dpddelay=30
+    dpdtimeout=120
     dpdaction=clear
-    sha2-truncbug=yes
+    sha2-truncbug=no
 EOF
 
     cat > /etc/ipsec.secrets<<EOF
@@ -216,6 +216,9 @@ EOF
 ipcp-accept-local
 ipcp-accept-remote
 require-mschap-v2
+refuse-pap
+refuse-chap
+refuse-mscha
 ms-dns 8.8.8.8
 ms-dns 8.8.4.4
 noccp
@@ -302,8 +305,8 @@ cat > /etc/sysconfig/iptables <<EOF
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -p icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT
--A INPUT -p tcp -m multiport --dports 81,1723,22,5000 -j ACCEPT
--A INPUT -p udp -m multiport --dports 500,4500,1701,1680,5000 -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 22,44158 -j ACCEPT
+-A INPUT -p udp -m multiport --dports 500,4500,1701,5000 -j ACCEPT
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -s ${iprange}.0/24  -j ACCEPT
