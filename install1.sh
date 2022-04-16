@@ -218,15 +218,15 @@ ipcp-accept-remote
 require-mschap-v2
 refuse-pap
 refuse-chap
-refuse-mscha
+refuse-mschap
 ms-dns 8.8.8.8
 ms-dns 8.8.4.4
 noccp
 auth
 hide-password
 idle 1800
-mtu 1410
-mru 1410
+mtu 1400
+mru 1400
 nodefaultroute
 debug
 proxyarp
