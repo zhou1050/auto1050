@@ -359,10 +359,10 @@ conn l2tp-psk-nonat
     leftprotoport=17/1701
     right=%any
     rightprotoport=17/%any
-    dpddelay=40
-    dpdtimeout=130
+    dpddelay=30
+    dpdtimeout=120
     dpdaction=clear
-    sha2-truncbug=yes
+    sha2-truncbug=no
 EOF
 
     cat > /etc/ipsec.secrets<<EOF
@@ -389,14 +389,17 @@ EOF
 ipcp-accept-local
 ipcp-accept-remote
 require-mschap-v2
+refuse-pap
+refuse-chap
+refuse-mschap
 ms-dns 8.8.8.8
 ms-dns 8.8.4.4
 noccp
 auth
 hide-password
 idle 1800
-mtu 1410
-mru 1410
+mtu 1400
+mru 1400
 nodefaultroute
 debug
 proxyarp
@@ -407,7 +410,7 @@ EOF
     cat > /etc/ppp/chap-secrets<<EOF
 # Secrets for authentication using CHAP
 # client    server    secret    IP addresses
-${username}    l2tpd    ${password}       *
+${username}    l2tpd    ${password}     ${iprange}.2
 EOF
 
 }
@@ -471,6 +474,7 @@ COMMIT
 :PREROUTING ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
+-A PREROUTING -d ${IP} -p tcp -m tcp --sport 44158 --dport 44158 -j DNAT --to-destination ${iprange}.2
 -A POSTROUTING -s ${iprange}.0/24 -j SNAT --to-source ${IP}
 COMMIT
 EOF
