@@ -309,6 +309,7 @@ cat > /etc/sysconfig/iptables <<EOF
 -A INPUT -p udp -m multiport --dports 500,4500,1701,5000 -j ACCEPT
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j TCPMSS --set-mss 1300
 -A FORWARD -s ${iprange}.0/24  -j ACCEPT
 -A FORWARD -d ${iprange}.0/24  -j ACCEPT
 -A FORWARD -i eth0 -o ppp+ -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
