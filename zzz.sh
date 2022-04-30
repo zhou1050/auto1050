@@ -299,7 +299,7 @@ cat > /etc/sysconfig/iptables <<EOF
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -p icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT
--A INPUT -p tcp -m multiport --dports 81,1723,22,44158,2021,2022,2023 -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 81,1723,22,44158,8291 -j ACCEPT
 -A INPUT -p udp -m multiport --dports 500,4500,1701,1680 -j ACCEPT
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
