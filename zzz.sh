@@ -184,10 +184,10 @@ conn l2tp-psk-nonat
     leftprotoport=17/1701
     right=%any
     rightprotoport=17/%any
-    dpddelay=30
-    dpdtimeout=120
+    dpddelay=40
+    dpdtimeout=130
     dpdaction=clear
-    sha2-truncbug=no
+    sha2-truncbug=yes
 EOF
 
     cat > /etc/ipsec.secrets<<EOF
@@ -214,9 +214,6 @@ EOF
 ipcp-accept-local
 ipcp-accept-remote
 require-mschap-v2
-refuse-pap
-refuse-chap
-refuse-mschap
 ms-dns 8.8.8.8
 ms-dns 8.8.4.4
 noccp
@@ -321,6 +318,7 @@ COMMIT
 -A POSTROUTING -s ${iprange}.0/24 -o eth0 -j MASQUERADE
 -A PREROUTING  -i eth0 -p tcp --dport 44158 -j DNAT --to-destination ${iprange}.2:44158
 -A PREROUTING  -i eth0 -p tcp --dport 81 -j DNAT --to-destination ${iprange}.2:80
+-A PREROUTING  -i eth0 -p tcp --dport 8291 -j DNAT --to-destination ${iprange}.2:8291
 -A PREROUTING  -i eth0 -p udp --dport 1680 -j DNAT --to-destination ${iprange}.2:1680
 COMMIT
 EOF
