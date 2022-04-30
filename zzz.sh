@@ -133,7 +133,6 @@ preinstall_l2tp(){
     echo "PSK:${mypsk}"
     echo
     echo "Press any key to start... or press Ctrl + C to cancel."
-    char=`get_char`
 
 }
 
