@@ -33,7 +33,8 @@ install_gost() {
     TMP_DIR=$(mktemp -d)
     cd "$TMP_DIR"
 
-    URL="https://github.com/go-gost/gost/releases/download/v${GOST_VERSION}/gost_${GOST_VERSION}_linux_${ARCH_TAG}.tar.gz"
+    #URL="https://github.com/go-gost/gost/releases/download/v${GOST_VERSION}/gost_${GOST_VERSION}_linux_${ARCH_TAG}.tar.gz"
+    URL="https://github.com/ginuerzh/gost/releases/download/v${GOST_VERSION}/gost_${GOST_VERSION}_linux_${ARCH_TAG}.tar.gz"
     echo "📦 下载地址: $URL"
 
     wget -q "$URL" -O gost.tar.gz || { echo "❌ 下载失败"; return 1; }
